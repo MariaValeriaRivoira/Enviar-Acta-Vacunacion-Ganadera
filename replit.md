@@ -29,6 +29,7 @@ Preferred communication style: Simple, everyday language.
 5. **Error Handling**: Proper error states and user feedback for validation errors and submission failures
 6. **Success Flow**: Success screen with option to submit another document
 7. **E2E Testing**: Comprehensive automated tests verify all user flows including optional email field
+8. **UI Refinement**: Removed footer with contact information per user request - clean, minimal design
 
 ### Technical Implementation
 - Backend route `/api/submit-document` accepts multipart/form-data and processes file uploads
@@ -36,6 +37,7 @@ Preferred communication style: Simple, everyday language.
 - Frontend uses React Hook Form with zodResolver for client-side validation
 - FileUpload component provides drag-and-drop and click-to-browse functionality
 - Responsive design works on mobile, tablet, and desktop devices
+- Home page simplified to show only the form without footer
 
 ## System Architecture
 
