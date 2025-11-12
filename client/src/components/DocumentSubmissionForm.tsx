@@ -28,7 +28,7 @@ export default function DocumentSubmissionForm() {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<SubmitDocumentData>({
+  } = useForm({
     resolver: zodResolver(submitDocumentSchema),
     defaultValues: {
       nombre: "",
@@ -49,7 +49,7 @@ export default function DocumentSubmissionForm() {
     }
   };
 
-  const onSubmit = async (data: SubmitDocumentData) => {
+  const onSubmit = async (data: any) => {
     if (!selectedFile) {
       setFileError("Debe seleccionar un archivo");
       return;
