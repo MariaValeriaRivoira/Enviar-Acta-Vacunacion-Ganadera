@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { Loader2, CheckCircle2, Mail } from "lucide-react";
+import { Loader2, CheckCircle2, Mail, AlertCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,29 +12,24 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import FileUpload from "./FileUpload";
-
-const formSchema = z.object({
-  nombre: z.string().min(1, "El nombre es requerido"),
-  telefono: z.string().min(1, "El teléfono es requerido"),
-  email: z.string().email("Email inválido").optional().or(z.literal("")),
-});
-
-type FormData = z.infer<typeof formSchema>;
+import { submitDocumentSchema, type SubmitDocumentData } from "@shared/schema";
 
 export default function DocumentSubmissionForm() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [fileError, setFileError] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState<string>("");
 
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<FormData>({
-    resolver: zodResolver(formSchema),
+  } = useForm<SubmitDocumentData>({
+    resolver: zodResolver(submitDocumentSchema),
     defaultValues: {
       nombre: "",
       telefono: "",
@@ -55,28 +49,49 @@ export default function DocumentSubmissionForm() {
     }
   };
 
-  const onSubmit = async (data: FormData) => {
+  const onSubmit = async (data: SubmitDocumentData) => {
     if (!selectedFile) {
       setFileError("Debe seleccionar un archivo");
       return;
     }
 
     setIsSubmitting(true);
-    console.log("Enviando documentación:", {
-      ...data,
-      archivo: selectedFile.name,
-    });
+    setSubmitError("");
 
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      const formData = new FormData();
+      formData.append('nombre', data.nombre);
+      formData.append('telefono', data.telefono);
+      if (data.email) {
+        formData.append('email', data.email);
+      }
+      formData.append('documento', selectedFile);
+
+      const response = await fetch('/api/submit-document', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || 'Error al enviar el documento');
+      }
+
       setIsSuccess(true);
-    }, 2000);
+    } catch (error: any) {
+      console.error('Error submitting document:', error);
+      setSubmitError(error.message || 'Error al enviar el documento. Por favor intente nuevamente.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleSendAnother = () => {
     setIsSuccess(false);
     setSelectedFile(null);
     setFileError("");
+    setSubmitError("");
     reset();
   };
 
@@ -127,6 +142,15 @@ export default function DocumentSubmissionForm() {
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          {submitError && (
+            <Alert variant="destructive">
+              <AlertCircle className="h-4 w-4" />
+              <AlertDescription data-testid="text-submit-error">
+                {submitError}
+              </AlertDescription>
+            </Alert>
+          )}
+
           <div className="space-y-2">
             <Label htmlFor="nombre" className="text-sm font-medium">
               Nombre <span className="text-destructive">*</span>
