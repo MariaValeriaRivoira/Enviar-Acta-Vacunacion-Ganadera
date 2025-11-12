@@ -15,6 +15,7 @@ import {
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import FileUpload from "./FileUpload";
 import { submitDocumentSchema, type SubmitDocumentData } from "@shared/schema";
+import { getApiUrl } from "@/lib/api-config";
 
 export default function DocumentSubmissionForm() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -67,7 +68,7 @@ export default function DocumentSubmissionForm() {
       }
       formData.append('documento', selectedFile);
 
-      const response = await fetch('/api/submit-document', {
+      const response = await fetch(getApiUrl('/api/submit-document'), {
         method: 'POST',
         body: formData,
       });

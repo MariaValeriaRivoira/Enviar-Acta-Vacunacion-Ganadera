@@ -30,6 +30,8 @@ Preferred communication style: Simple, everyday language.
 6. **Success Flow**: Success screen with option to submit another document
 7. **E2E Testing**: Comprehensive automated tests verify all user flows including optional email field
 8. **UI Refinement**: Removed footer with contact information per user request - clean, minimal design
+9. **CORS Configuration**: Backend configured to accept requests from Firebase Hosting domains
+10. **Firebase Deployment**: Ready for deployment with frontend on Firebase, backend on Replit
 
 ### Technical Implementation
 - Backend route `/api/submit-document` accepts multipart/form-data and processes file uploads

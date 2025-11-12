@@ -1,4 +1,5 @@
 import express, { type Request, Response, NextFunction } from "express";
+import cors from "cors";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 
@@ -9,6 +10,36 @@ declare module 'http' {
     rawBody: unknown
   }
 }
+
+const allowedOrigins = [
+  'https://actavacunacionbayauca.web.app',
+  'https://actavacunacionbayauca.firebaseapp.com',
+];
+
+if (process.env.NODE_ENV === 'development') {
+  app.use(cors({
+    origin: true,
+    credentials: true,
+  }));
+} else {
+  app.use(cors({
+    origin: (origin, callback) => {
+      if (!origin) {
+        callback(null, true);
+        return;
+      }
+      
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+        return;
+      }
+      
+      callback(new Error('Not allowed by CORS'));
+    },
+    credentials: true,
+  }));
+}
+
 app.use(express.json({
   verify: (req, _res, buf) => {
     req.rawBody = buf;
