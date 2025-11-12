@@ -31,7 +31,14 @@ const upload = multer({
 export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/submit-document", upload.single('documento'), async (req, res) => {
     try {
-      const validatedData = submitDocumentSchema.parse(req.body);
+      // Prepare body data for validation (empty strings should remain for Zod transform)
+      const bodyData = {
+        nombre: req.body.nombre,
+        telefono: req.body.telefono,
+        email: req.body.email || "",
+      };
+      
+      const validatedData = submitDocumentSchema.parse(bodyData);
       
       if (!req.file) {
         return res.status(400).json({ 
