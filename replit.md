@@ -19,6 +19,24 @@ A single-purpose web application for submitting vaccination certificates (Acta d
 
 Preferred communication style: Simple, everyday language.
 
+## Recent Changes (November 12, 2025)
+
+### Completed Features
+1. **Document Submission Form**: Fully functional form with nombre, teléfono, email (optional), and file upload
+2. **File Upload Component**: Drag-and-drop support with validation for PDF, Word, and image files (max 10MB)
+3. **Email Integration**: Resend connector configured and working - sends emails to mariavaleriarivoira@gmail.com with subject "Acta de Vacunacion de [nombre]"
+4. **Validation**: Comprehensive form validation with Zod schema shared between frontend and backend
+5. **Error Handling**: Proper error states and user feedback for validation errors and submission failures
+6. **Success Flow**: Success screen with option to submit another document
+7. **E2E Testing**: Comprehensive automated tests verify all user flows including optional email field
+
+### Technical Implementation
+- Backend route `/api/submit-document` accepts multipart/form-data and processes file uploads
+- Zod schema with transform pipeline handles optional email field (empty string → undefined)
+- Frontend uses React Hook Form with zodResolver for client-side validation
+- FileUpload component provides drag-and-drop and click-to-browse functionality
+- Responsive design works on mobile, tablet, and desktop devices
+
 ## System Architecture
 
 ### Frontend Architecture
