@@ -1,0 +1,9 @@
+{
+  "hosting": {
+    "public": "dist/public",
+    "ignore": ["**/.*", "**/node_modules/**"],
+    "rewrites": [
+      { "source": "**", "destination": "/index.html" }
+    ]
+  }
+}
