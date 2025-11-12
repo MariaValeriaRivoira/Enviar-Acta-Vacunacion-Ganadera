@@ -46,19 +46,13 @@ VITE_API_URL=https://tu-repl-name.tu-usuario.repl.co
 - NO incluyas un slash final (/) en la URL
 - La función `getApiUrl` elimina automáticamente el slash final si existe, pero es mejor no incluirlo
 
-### Paso 3: Actualizar CORS si es necesario
+### Paso 3: CORS Ya Configurado
 
-Si tu URL de Replit es diferente a las configuradas, edita `server/index.ts` y agrega tu URL a `allowedOrigins`:
+El backend ya está configurado para aceptar solicitudes desde:
+- `https://actavacunacionbayauca.web.app` (Firebase Hosting)
+- `https://actavacunacionbayauca.firebaseapp.com` (Firebase Hosting)
 
-```typescript
-const allowedOrigins = [
-  'http://localhost:5173',
-  'http://localhost:5000',
-  'https://actavacunacionbayauca.web.app',
-  'https://actavacunacionbayauca.firebaseapp.com',
-  'https://tu-url-de-replit.repl.co', // Agrega esta línea
-];
-```
+**Nota**: El backend en Replit (`https://ActaVacunacionBayauca.replit.app`) NO necesita estar en la lista de CORS porque las solicitudes vienen desde Firebase, no desde el mismo dominio de Replit.
 
 ### Paso 4: Build del Proyecto
 
