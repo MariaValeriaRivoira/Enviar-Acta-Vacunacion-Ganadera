@@ -1,0 +1,96 @@
+2025-11-15 07:50:50.56
+18b00385
+User
+10:50:50 AM [express] serving on port 5000
+2025-11-15 07:52:58.94
+18b00385
+User
+at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+2025-11-15 07:52:58.94
+18b00385
+User
+at corsMiddleware (/home/runner/workspace/node_modules/cors/lib/index.js:204:7)
+2025-11-15 07:52:58.94
+18b00385
+User
+at origin (file:///home/runner/workspace/dist/index.js:264:16)
+2025-11-15 07:52:58.94
+18b00385
+User
+at optionsCallback (/home/runner/workspace/node_modules/cors/lib/index.js:199:9)
+2025-11-15 07:52:58.94
+18b00385
+User
+at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+2025-11-15 07:52:58.94
+18b00385
+User
+Error: Not allowed by CORS
+2025-11-15 07:52:58.94
+18b00385
+User
+at expressInit (/home/runner/workspace/node_modules/express/lib/middleware/init.js:40:5)
+2025-11-15 07:52:58.94
+18b00385
+User
+at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+2025-11-15 07:52:58.94
+18b00385
+User
+at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+2025-11-15 07:52:58.94
+18b00385
+User
+at /home/runner/workspace/node_modules/cors/lib/index.js:219:13
+2025-11-15 07:52:58.94
+18b00385
+User
+at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+2025-11-15 07:52:58.95
+18b00385
+User
+at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+2025-11-15 07:52:58.95
+18b00385
+User
+at optionsCallback (/home/runner/workspace/node_modules/cors/lib/index.js:199:9)
+2025-11-15 07:52:58.95
+18b00385
+User
+Error: Not allowed by CORS
+2025-11-15 07:52:58.95
+18b00385
+User
+at /home/runner/workspace/node_modules/cors/lib/index.js:219:13
+2025-11-15 07:52:58.95
+18b00385
+User
+at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+2025-11-15 07:52:58.95
+18b00385
+User
+at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+2025-11-15 07:52:58.95
+18b00385
+User
+at expressInit (/home/runner/workspace/node_modules/express/lib/middleware/init.js:40:5)
+2025-11-15 07:52:58.95
+18b00385
+User
+at corsMiddleware (/home/runner/workspace/node_modules/cors/lib/index.js:204:7)
+2025-11-15 07:52:58.95
+18b00385
+User
+at origin (file:///home/runner/workspace/dist/index.js:264:16)
+2025-11-15 07:52:58.95
+18b00385
+User
+at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+2025-11-15 07:52:58.95
+18b00385
+User
+at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+2025-11-15 07:55:24.45
+18b00385
+User
+10:55:24 AM [express] POST /api/submit-document 200 in 378ms :: {"success":true,"message":"Documento …
