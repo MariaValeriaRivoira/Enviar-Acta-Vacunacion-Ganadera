@@ -11,7 +11,7 @@ A single-purpose web application for submitting vaccination certificates (Acta d
 - UI Framework: shadcn/ui components with Radix UI primitives
 - Styling: Tailwind CSS with custom design tokens
 - Backend: Express.js with TypeScript
-- Email Service: Resend API integration
+- Email Service: Gmail SMTP via Nodemailer
 - Database: PostgreSQL with Drizzle ORM (configured but not actively used for form submissions)
 - File Handling: Multer for multipart form data
 
@@ -19,19 +19,19 @@ A single-purpose web application for submitting vaccination certificates (Acta d
 
 Preferred communication style: Simple, everyday language.
 
-## Recent Changes (November 12, 2025)
+## Recent Changes (November 15, 2025)
 
 ### Completed Features
 1. **Document Submission Form**: Fully functional form with nombre, teléfono, email (optional), and file upload
 2. **File Upload Component**: Drag-and-drop support with validation for PDF, Word, and image files (max 10MB)
-3. **Email Integration**: Resend connector configured and working - sends emails to mariavaleriarivoira@gmail.com with subject "Acta de Vacunacion de [nombre]"
+3. **Email Integration**: Migrated from Resend to Gmail SMTP using Nodemailer - sends emails to mariavaleriarivoira@gmail.com with subject "Acta de Vacunacion de [nombre]"
 4. **Validation**: Comprehensive form validation with Zod schema shared between frontend and backend
 5. **Error Handling**: Proper error states and user feedback for validation errors and submission failures
 6. **Success Flow**: Success screen with option to submit another document
 7. **E2E Testing**: Comprehensive automated tests verify all user flows including optional email field
 8. **UI Refinement**: Removed footer with contact information per user request - clean, minimal design
 9. **CORS Configuration**: Backend configured to accept requests from Firebase Hosting domains
-10. **Firebase Deployment**: Ready for deployment with frontend on Firebase, backend on Replit
+10. **Firebase Deployment**: Frontend deployed on Firebase Hosting, backend on Replit
 
 ### Technical Implementation
 - Backend route `/api/submit-document` accepts multipart/form-data and processes file uploads
@@ -68,7 +68,7 @@ Preferred communication style: Simple, everyday language.
 1. Client submits form with multipart/form-data (includes file upload)
 2. Multer middleware processes file upload (10MB limit)
 3. Zod schema validates form data
-4. Resend API sends email with attached document
+4. Gmail SMTP (via Nodemailer) sends email with attached document
 5. No data persistence - stateless transaction
 
 **File Upload Strategy**:
@@ -99,17 +99,23 @@ Preferred communication style: Simple, everyday language.
 
 ### Email Integration
 
-**Resend API**: Third-party email service for reliable transactional email delivery.
+**Gmail SMTP via Nodemailer**: Uses Gmail's SMTP server for email delivery.
 
-**Authentication Approach**: Uses Replit Connectors system for secure credential management:
-- Retrieves API credentials via Replit's internal connector API
-- Supports both development (REPL_IDENTITY) and deployment (WEB_REPL_RENEWAL) tokens
-- Credentials fetched dynamically on each email send (uncachable client)
+**Authentication Approach**: Uses Gmail App Passwords stored in Replit Secrets:
+- `GMAIL_USER`: Gmail account email (mariavaleriarivoira@gmail.com)
+- `GMAIL_APP_PASSWORD`: 16-character app password generated from Google Account settings
+- Credentials loaded from environment variables at runtime
+
+**Email Configuration**:
+- Service: Gmail SMTP (smtp.gmail.com)
+- Authentication: OAuth2 credentials via App Password
+- From address: mariavaleriarivoira@gmail.com
+- To address: mariavaleriarivoira@gmail.com (hardcoded)
 
 **Email Content**:
 - HTML-formatted body with submitted form data
 - Attached vaccination document from upload
-- Sent from configured "from_email" address
+- Subject: "Acta de Vacunacion de [nombre]"
 - Recipient email embedded in template
 
 **Design Trade-off**: Direct email sending without database storage simplifies architecture but provides no audit trail or retry mechanism.
@@ -172,11 +178,12 @@ Preferred communication style: Simple, everyday language.
 
 ### Third-Party Services
 
-**Resend Email Service**:
+**Gmail SMTP (via Nodemailer)**:
 - Purpose: Transactional email delivery
-- Integration: REST API with API key authentication
-- Configuration: Via Replit Connectors for secure credential management
-- Critical dependency: Application cannot function without valid Resend credentials
+- Integration: SMTP protocol with Gmail App Password authentication
+- Configuration: Environment variables (GMAIL_USER, GMAIL_APP_PASSWORD) stored in Replit Secrets
+- Critical dependency: Application cannot function without valid Gmail credentials
+- Note: Gmail has sending limits (500 emails/day for regular accounts, 2000/day for Google Workspace)
 
 ### Database
 
