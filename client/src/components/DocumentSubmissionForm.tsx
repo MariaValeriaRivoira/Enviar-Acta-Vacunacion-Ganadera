@@ -110,7 +110,6 @@ export default function DocumentSubmissionForm() {
               <h2 className="text-2xl font-bold">Documento enviado exitosamente</h2>
               <p className="text-muted-foreground">
                 Su acta de vacunación ha sido enviada correctamente.
-                Recibirá una confirmación en breve.
               </p>
             </div>
             <Button
