@@ -133,6 +133,7 @@ export default function DocumentSubmissionForm() {
             <Mail className="h-6 w-6 text-primary" />
           </div>
           <div>
+            <p className="text-sm font-medium text-muted-foreground mb-1">Delegación Bayauca</p>
             <CardTitle className="text-3xl">Envío de Acta de Vacunación</CardTitle>
             <CardDescription className="text-base mt-2">
               Complete el formulario y adjunte su documento para enviarlo de forma segura
