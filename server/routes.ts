@@ -2,7 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import multer from "multer";
 import { submitDocumentSchema } from "@shared/schema";
-import { getUncachableResendClient } from "./resend-client";
+import { getGmailTransporter } from "./gmail-client";
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -46,7 +46,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      const { client, fromEmail } = await getUncachableResendClient();
+      const transporter = await getGmailTransporter();
 
       const emailBody = `
 <html>
@@ -62,8 +62,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
 </html>
       `.trim();
 
-      await client.emails.send({
-        from: fromEmail,
+      await transporter.sendMail({
+        from: process.env.GMAIL_USER,
         to: 'mariavaleriarivoira@gmail.com',
         subject: `Acta de Vacunacion de ${validatedData.nombre}`,
         html: emailBody,
