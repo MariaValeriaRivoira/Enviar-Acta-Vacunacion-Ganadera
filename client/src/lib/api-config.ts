@@ -1,4 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || '';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://ActaVacunacionBayauca.replit.app';
 
 export function getApiUrl(path: string): string {
   if (API_BASE_URL) {
