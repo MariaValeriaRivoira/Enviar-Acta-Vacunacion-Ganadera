@@ -68,7 +68,7 @@ export default function DocumentSubmissionForm() {
       }
       formData.append('documento', selectedFile);
 
-      const response = await fetch(getApiUrl('/api/submit-document'), {
+      const response = await fetch('https://ActaVacunacionBayauca.replit.app/api/submit-document', {
         method: 'POST',
         body: formData,
       });
